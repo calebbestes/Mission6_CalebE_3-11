@@ -2,9 +2,47 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    <form>
-        
-    </form>
-
-
 }
+
+@model Movies
+<form asp-controller="Home" asp-action="MovieCollection" method="post">
+    <select asp-for="Category">
+        <option value="">Select Category</option>
+        <option value="Miscellaneous">Miscellaneous</option>
+        <option value="Drama">Drama</option>
+        <option value="Horror">Horror/Suspense</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Family">Family</option>
+        <option value="Action">Action/Adventure</option>
+        <option value="VHS">VHS</option>
+    </select>
+    <br />
+    <label asp-for="Title"></label>
+    <input asp-for="Title" placeholder="Enter Title" />
+    <br />
+    <label asp-for="Year"></label>
+    <input asp-for="Year" placeholder="Enter Year" />
+    <br />
+    <label asp-for="Director"></label>
+    <input asp-for="Director" placeholder="Enter Director" />
+    <br />
+    <select asp-for="Rating">
+        <option value="">Select Rating</option>
+        <option value="G">G</option>
+        <option value="PG">PG</option>
+        <option value="PG13">PG-13</option>
+        <option value="R">R</option>
+    </select>
+    <br />
+    <label asp-for="Edited"></label>
+    <input asp-for="Edited" placeholder="Enter Editing Information" />
+    <br />
+    <label asp-for="Borrower"></label>
+    <input asp-for="Borrower" placeholder="Enter Borrower's Name" />
+    <br />
+    <label asp-for="Notes"></label>
+    <input asp-for="Notes" placeholder="Enter Notes" />
+    <br />
+    <button type="submit">Submit</button>
+</form>
+
