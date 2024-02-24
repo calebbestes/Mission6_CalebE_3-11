@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mission6_CalebE_3_11.Models;
+using NuGet.Packaging.Signing;
 
 namespace Mission6_CalebE_3_11.Controllers
 {
@@ -12,21 +14,9 @@ namespace Mission6_CalebE_3_11.Controllers
             _context = temp;
         }
 
-        //private readonly ILogger<HomeController> _logger;
-
-        //public HomeController(ILogger<HomeController> logger)
-        //{
-        //    _logger = logger;
-        //}
 
         [HttpGet]
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult Collection()
         {
             return View();
         }
@@ -38,13 +28,17 @@ namespace Mission6_CalebE_3_11.Controllers
         }
 
         [HttpGet]
+
         public IActionResult Form()
         {
-            return View();
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryName).ToList();
+            return View("Form",new Movie());
         }
 
+
         [HttpPost]
-        public IActionResult MovieCollection(Movies Response)
+        public IActionResult Form(Movie Response)
         {
             _context.Movies.Add(Response);
             _context.SaveChanges();
@@ -52,6 +46,50 @@ namespace Mission6_CalebE_3_11.Controllers
             return View("Confirmation", Response);
         }
 
+
+        [HttpGet]
+        public IActionResult Collection()
+        {
+            var movies = _context.Movies.Include(x=>x.Category).ToList()
+                 .OrderBy(x => x.Title).ToList();
+            return View(movies);
+        }
+
+        [HttpGet]
+
+        public IActionResult Edit(int id)
+        {
+            var recordToEdit = _context.Movies
+                .Single(x => x.MovieId == id);
+
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryName).ToList();
+
+            return View("Form", recordToEdit);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Movie updatedInfo)
+        {
+            _context.Update(updatedInfo);
+            _context.SaveChanges();
+            return RedirectToAction("Collection");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id) {
+            var recordToDelete = _context.Movies
+                .Single(x => x.MovieId == id);
+
+            return View("Collection", recordToDelete);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Movie record) {
+            _context.Update(record);
+            _context.SaveChanges();
+            return RedirectToAction("Collection");
+        }
 
     }
 }

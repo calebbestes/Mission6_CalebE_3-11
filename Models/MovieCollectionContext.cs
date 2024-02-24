@@ -8,6 +8,7 @@ namespace Mission6_CalebE_3_11.Models
         {
         }
 
-        public DbSet<Movies>Movies { get; set; }
+        public DbSet<Movie>Movies { get; set; }
+        public DbSet<Category>Categories { get; set; }
     }
 }
