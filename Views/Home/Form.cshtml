@@ -8,9 +8,9 @@
 
 <h1>Add a Movie</h1>
 
-<form asp-controller="Home" asp-action="MovieCollection" method="post">
+<form  method="post">
 
-    <input type=„hidden“ asp-for="MovieId"/>    
+    <input type="hidden" asp-for="MovieId"/>    
     <select asp-for="CategoryId">
         <option value="">Select Category</option>
         @foreach (Category c in ViewBag.Categories)

@@ -33,7 +33,7 @@ namespace Mission6_CalebE_3_11.Controllers
         {
             ViewBag.Categories = _context.Categories
                 .OrderBy(x => x.CategoryName).ToList();
-            return View("Form",new Movie());
+            return View("Form");
         }
 
 
@@ -81,12 +81,12 @@ namespace Mission6_CalebE_3_11.Controllers
             var recordToDelete = _context.Movies
                 .Single(x => x.MovieId == id);
 
-            return View("Collection", recordToDelete);
+            return View("Delete", recordToDelete);
         }
 
         [HttpPost]
         public IActionResult Delete(Movie record) {
-            _context.Update(record);
+            _context.Remove(record);
             _context.SaveChanges();
             return RedirectToAction("Collection");
         }
